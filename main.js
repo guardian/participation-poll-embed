@@ -74,8 +74,7 @@
                     if (previousSubmission) {
                         renderResultsFromPollJson(previousSubmission.id, previousSubmission.answer)
                     }
-                    else
-                    {
+                    else {
                         renderPollForm(id)
                     }
                 }
@@ -123,9 +122,8 @@
                         '' + option2[0] + ' ' + a2Percentage + '%</div>'
                     )
                 }
-                else
+                else {
                 //there will be up to 60 seconds latency before first results are published
-                {
                     bonzo($('.form-body')[0]).replaceWith(
                         '<div class="pseudo-radio__header q1">Thank you for voting, come back soon to see the results</div>'
                     )
