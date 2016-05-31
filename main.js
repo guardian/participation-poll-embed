@@ -9,7 +9,7 @@
 
     var interactiveApi = 'https://interactive.guardianapis.com';
     var interactiveHost = 'https://interactive.guim.co.uk';
-    var idFromQueryString = getIdFromQueryString();
+    var id = getIdFromQueryString();
 
     var option1;
     var option2;
@@ -28,7 +28,6 @@
 
 
     function getPreviousPollSubmission() {
-        var id = idFromQueryString;
         function getPollById(data, id){
             function byId(value) {
                 return value.id == id;
@@ -63,10 +62,10 @@
         })
             .then(function (resp) {
                 var compressed = compressJson(resp);
-                if (resp.sheets[idFromQueryString] != undefined) {
-                    option1 = [resp.sheets[idFromQueryString][0].a1, compressed.sheets[idFromQueryString][0].a1];
-                    option2 = [resp.sheets[idFromQueryString][0].a2, compressed.sheets[idFromQueryString][0].a2];
-                    title = resp.sheets[idFromQueryString][0].title;
+                if (resp.sheets[id] != undefined) {
+                    option1 = [resp.sheets[id][0].a1, compressed.sheets[id][0].a1];
+                    option2 = [resp.sheets[id][0].a2, compressed.sheets[id][0].a2];
+                    title = resp.sheets[id][0].title;
                     bonzo($('.title')[0]).html(title);
                     var previousSubmission = getPreviousPollSubmission();
                     if (previousSubmission) {
@@ -74,12 +73,12 @@
                     }
                     else
                     {
-                        renderPollForm(idFromQueryString)
+                        renderPollForm(id)
                     }
                 }
                 else {
                     bonzo($('.form-body')[0]).replaceWith(
-                        '<div class="pseudo-radio__header q1">No poll found with ID: '+idFromQueryString+'</div>'
+                        '<div class="pseudo-radio__header q1">No poll found with ID: '+id+'</div>'
                     )
                 }
             });
@@ -88,7 +87,6 @@
 
     function renderPollForm() {
 
-        var id = idFromQueryString;
         bonzo($('.q1')[0]).html(option1[0]);
         bonzo($('.q2')[0]).html(option2[0]);
         bonzo($('#q1-input')).attr("value", option1[1]);
@@ -100,7 +98,7 @@
         var submission = formSerialize($('#form')[0],{ hash: true });
         var answer = submission.option;
         event.preventDefault();
-        submitPoll(idFromQueryString, answer)
+        submitPoll(id, answer)
     });
 
 
@@ -155,7 +153,7 @@
 
     }
 
-    renderPoll(idFromQueryString)
+    renderPoll(id)
 }());
 
 
