@@ -58,7 +58,7 @@
 
     function renderPoll() {
         reqwest({
-            url: interactiveHost + '/docsdata-test/10RGbEQiyWIw_6EvtdVwoK3HQr2W0ipeIlfq1Jb6Dw-g.json'
+            url: interactiveHost + '/docsdata/10RGbEQiyWIw_6EvtdVwoK3HQr2W0ipeIlfq1Jb6Dw-g.json'
             , type: 'json'
         })
             .then(function (resp) {
