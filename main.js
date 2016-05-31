@@ -25,8 +25,6 @@
         return parsedQueryString.id != undefined ? parsedQueryString.id : "test"
     }
 
-
-
     function getPreviousPollSubmission() {
         function getPollById(data, id){
             function byId(value) {
@@ -84,7 +82,6 @@
             });
     }
 
-
     function renderPollForm() {
 
         bonzo($('.q1')[0]).html(option1[0]);
@@ -100,7 +97,6 @@
         event.preventDefault();
         submitPoll(id, answer)
     });
-
 
     function renderResultsFromPollJson(id, answer) {
         reqwest({
@@ -155,11 +151,3 @@
 
     renderPoll(id)
 }());
-
-
-
-
-
-
-
-
