@@ -18,9 +18,8 @@
 
     iframeMessenger.enableAutoResize();
 
-    function compressJson(json){
-        var raw = JSON.stringify(json);
-        return JSON.parse(raw.replace(/\s+/g, "").toLowerCase());
+    function compressString(string){
+        return string.replace(/[\s+|\W]/g, "").toLowerCase();
     }
 
     function getIdFromQueryString(){
@@ -58,14 +57,17 @@
 
     function renderPoll() {
         reqwest({
-            url: interactiveHost + '/docsdata/10RGbEQiyWIw_6EvtdVwoK3HQr2W0ipeIlfq1Jb6Dw-g.json'
+            url: interactiveHost + '/docsdata-test/10RGbEQiyWIw_6EvtdVwoK3HQr2W0ipeIlfq1Jb6Dw-g.json'
             , type: 'json'
         })
             .then(function (resp) {
-                var compressed = compressJson(resp);
+                console.log("IN HERE")
+                    var option1FromJson = resp.sheets[id][0].a1;
+                    console.log(option1FromJson)
+                    var option2FromJson = resp.sheets[id][0].a2;
                 if (resp.sheets && resp.sheets[id]) {
-                    option1 = [resp.sheets[id][0].a1, compressed.sheets[id][0].a1];
-                    option2 = [resp.sheets[id][0].a2, compressed.sheets[id][0].a2];
+                    option1 = [option1FromJson, compressString(resp.sheets[id][0].a1)];
+                    option2 = [option2FromJson, compressString(resp.sheets[id][0].a2)];
                     title = resp.sheets[id][0].title;
                     bonzo($('.title')[0]).html(title);
                     bonzo($('#form')).removeClass('form-is-hidden');

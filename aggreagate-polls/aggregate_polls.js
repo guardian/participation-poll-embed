@@ -8,8 +8,6 @@ var s3 = new AWS.S3();
 var key = process.argv[2];
 client.lrange(key, 0, -1, (err, items) => {
     //console.log(items);
-var raw = (JSON.stringify(items));
-items = JSON.parse(raw.replace(/\s+/g, '').toLowerCase());
 var counts = _(items)
     .map(item => JSON.parse(item))
     .groupBy("question")
