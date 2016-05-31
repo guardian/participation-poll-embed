@@ -1,0 +1,42 @@
+<html>
+<head>
+    <link rel="stylesheet" type="text/css" href="bower_components/pasteup-forms/build/forms.min.css">
+</head>
+<body>
+<form id="form">
+    <fieldset class="fieldset">
+        <div class="fieldset__heading">
+            <h2 class="fieldset__headline title">Poll name</h2>
+        </div>
+        <div class="fieldset__fields form-body">
+
+            <div class="form-field">
+                <label class="label" for="q1-input">
+                    <input type="radio" class="pseudo-radio-input" name="option" id="q1-input" value="option-one">
+                    <div class="pseudo-radio">
+                        <div class="pseudo-radio__header q1">Option one</div>
+                    </div>
+                </label>
+                <label class="label" for="q2-input">
+                    <input type="radio" class="pseudo-radio-input" name="option" id="q2-input" value="option-two">
+                    <div class="pseudo-radio">
+                        <div class="pseudo-radio__header q2">Option two</div>
+                    </div>
+                </label>
+            </div>
+
+
+        </div>
+    </fieldset>
+    <fieldset class="fieldset fieldset--simple">
+        <div class="fieldset__heading"></div>
+        <div class="fieldset__fields">
+            <div class="actions">
+                <button class="submit button button--primary button--large">Submit</button>
+            </div>
+        </div>
+    </fieldset>
+</form>
+</body>
+<script src="bundle.js"></script>
+</html>
