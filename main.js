@@ -63,11 +63,12 @@
         })
             .then(function (resp) {
                 var compressed = compressJson(resp);
-                if (resp.sheets[id] != undefined) {
+                if (resp.sheets && resp.sheets[id]) {
                     option1 = [resp.sheets[id][0].a1, compressed.sheets[id][0].a1];
                     option2 = [resp.sheets[id][0].a2, compressed.sheets[id][0].a2];
                     title = resp.sheets[id][0].title;
                     bonzo($('.title')[0]).html(title);
+                    bonzo($('#form')).removeClass('form-is-hidden');
                     var previousSubmission = getPreviousPollSubmission();
                     if (previousSubmission) {
                         renderResultsFromPollJson(previousSubmission.id, previousSubmission.answer)
@@ -78,10 +79,10 @@
                     }
                 }
                 else {
-                    bonzo($('.form-body')[0]).replaceWith(
-                        '<div class="pseudo-radio__header q1">No poll found with ID: '+id+'</div>'
-                    )
+                   console && console.warn('No poll found with ID: '+id);
                 }
+            },  function (err, msg) {
+                console && console.warn('Something went wrong : ' + msg)
             });
     }
 
