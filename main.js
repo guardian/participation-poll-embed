@@ -16,7 +16,7 @@
     var title;
 
     function compressJson(json){
-        var raw = (JSON.stringify(json));
+        var raw = JSON.stringify(json);
         return JSON.parse(raw.replace(/\s+/g, "").toLowerCase());
     }
 
