@@ -6,6 +6,7 @@
     var bean = require('bean');
     var queryString = require('query-string');
     var formSerialize = require('form-serialize');
+    var iframeMessenger = require('iframe-messenger');
 
     var interactiveApi = 'https://interactive.guardianapis.com';
     var interactiveHost = 'https://interactive.guim.co.uk';
@@ -14,6 +15,8 @@
     var option1;
     var option2;
     var title;
+
+    iframeMessenger.enableAutoResize();
 
     function compressJson(json){
         var raw = JSON.stringify(json);
