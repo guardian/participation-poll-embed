@@ -10,6 +10,7 @@
 
     var interactiveApi = 'https://interactive.guardianapis.com';
     var interactiveHost = 'https://interactive.guim.co.uk';
+    var localStorageKey = "gu.polls.submitted";
     var id = getIdFromQueryString();
 
     var option1;
@@ -35,8 +36,8 @@
             return data.filter(byId)[0]
         }
 
-        if (localStorage.getItem("pollsSubmitted") != null) {
-            var polls = JSON.parse(localStorage.getItem("pollsSubmitted"));
+        if (localStorage.getItem(localStorageKey) != null) {
+            var polls = JSON.parse(localStorage.getItem(localStorageKey));
             return getPollById(polls, id)
         }
         else {
@@ -46,28 +47,26 @@
 
     function savePollSubmissionInLocalStorage(id, answer){
 
-        if(!localStorage.getItem('pollsSubmitted')) {
-            localStorage.setItem('pollsSubmitted', JSON.stringify([{id: id, answer: answer}]))
+        if(!localStorage.getItem(localStorageKey)) {
+            localStorage.setItem(localStorageKey, JSON.stringify([{id: id, answer: answer}]))
         } else {
-            var polls = JSON.parse(localStorage.getItem('pollsSubmitted'));
+            var polls = JSON.parse(localStorage.getItem(localStorageKey));
             polls.push({id: id, answer: answer});
-            localStorage.setItem('pollsSubmitted', JSON.stringify(polls))
+            localStorage.setItem(localStorageKey, JSON.stringify(polls))
         }
     }
 
     function renderPoll() {
         reqwest({
-            url: interactiveHost + '/docsdata-test/10RGbEQiyWIw_6EvtdVwoK3HQr2W0ipeIlfq1Jb6Dw-g.json'
+            url: interactiveHost + '/docsdata/10RGbEQiyWIw_6EvtdVwoK3HQr2W0ipeIlfq1Jb6Dw-g.json'
             , type: 'json'
         })
             .then(function (resp) {
-                console.log("IN HERE")
-                    var option1FromJson = resp.sheets[id][0].a1;
-                    console.log(option1FromJson)
-                    var option2FromJson = resp.sheets[id][0].a2;
                 if (resp.sheets && resp.sheets[id]) {
-                    option1 = [option1FromJson, compressString(resp.sheets[id][0].a1)];
-                    option2 = [option2FromJson, compressString(resp.sheets[id][0].a2)];
+                    var option1FromJson = resp.sheets[id][0].a1;
+                    var option2FromJson = resp.sheets[id][0].a2;
+                    option1 = [option1FromJson, compressString(option1FromJson)];
+                    option2 = [option2FromJson, compressString(option2FromJson)];
                     title = resp.sheets[id][0].title;
                     bonzo($('.title')[0]).html(title);
                     bonzo($('#form')).removeClass('form-is-hidden');
@@ -81,7 +80,7 @@
                     }
                 }
                 else {
-                   console && console.warn('No poll found with ID: '+id);
+                   console && console.warn('No poll found with ID: '+ id);
                 }
             },  function (err, msg) {
                 console && console.warn('Something went wrong : ' + msg)
