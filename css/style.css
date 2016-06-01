@@ -1,3 +1,38 @@
 .form-is-hidden{
     display: none;
 }
+
+/* Accessible Radio Buttons */
+
+.pseudo-radio-input {
+    display: block;
+    position: absolute;
+    width: 22px;
+    height: 22px;
+    overflow: hidden;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    outline: 0;
+    opacity: 0;
+}
+
+/* Replace focus and check styles */
+.pseudo-radio {
+    /* Avoid jumpiness */
+    border: 1px solid transparent;
+}
+
+.pseudo-radio:before {
+    top: 15px;
+}
+
+.pseudo-radio-input:checked + .pseudo-radio {
+    border-color: transparent;
+}
+
+.pseudo-radio-input:hover + .pseudo-radio,
+.pseudo-radio-input:focus + .pseudo-radio,
+.pseudo-radio-input:active + .pseudo-radio {
+    border: 1px solid #005689;
+}

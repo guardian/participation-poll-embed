@@ -130,7 +130,6 @@
                         '<div class="pseudo-radio__header q1">Thank you for voting, come back soon to see the results</div>'
                     );
                 }
-                bonzo($('.submit')[0]).remove();
             }
         });
     }
