@@ -10,7 +10,7 @@
 
     var interactiveApi = 'https://interactive.guardianapis.com';
     var interactiveHost = 'https://interactive.guim.co.uk';
-    var localStorageKey = "gu.polls.submitted";
+    var localStorageKey = 'gu.polls.submitted';
     var id = getIdFromQueryString();
 
     var option1;
@@ -20,12 +20,12 @@
     iframeMessenger.enableAutoResize();
 
     function compressString(string){
-        return string.replace(/[\s+|\W]/g, "").toLowerCase();
+        return string.replace(/[\s+|\W]/g, '').toLowerCase();
     }
 
     function getIdFromQueryString(){
         var parsedQueryString = queryString.parse(location.search);
-        return parsedQueryString.id != undefined ? parsedQueryString.id : "test"
+        return parsedQueryString.id != undefined ? parsedQueryString.id : 'test';
     }
 
     function getPreviousPollSubmission() {
@@ -33,26 +33,26 @@
             function byId(value) {
                 return value.id == id;
             }
-            return data.filter(byId)[0]
+            return data.filter(byId)[0];
         }
 
         if (localStorage.getItem(localStorageKey) != null) {
             var polls = JSON.parse(localStorage.getItem(localStorageKey));
-            return getPollById(polls, id)
+            return getPollById(polls, id);
         }
         else {
-            return null
+            return null;
         }
     }
 
     function savePollSubmissionInLocalStorage(id, answer){
 
         if(!localStorage.getItem(localStorageKey)) {
-            localStorage.setItem(localStorageKey, JSON.stringify([{id: id, answer: answer}]))
+            localStorage.setItem(localStorageKey, JSON.stringify([{id: id, answer: answer}]));
         } else {
             var polls = JSON.parse(localStorage.getItem(localStorageKey));
             polls.push({id: id, answer: answer});
-            localStorage.setItem(localStorageKey, JSON.stringify(polls))
+            localStorage.setItem(localStorageKey, JSON.stringify(polls));
         }
     }
 
@@ -72,17 +72,19 @@
                     bonzo($('#form')).removeClass('form-is-hidden');
                     var previousSubmission = getPreviousPollSubmission();
                     if (previousSubmission) {
-                        renderResultsFromPollJson(previousSubmission.id, previousSubmission.answer)
+                        renderResultsFromPollJson(previousSubmission.id, previousSubmission.answer);
                     }
                     else {
-                        renderPollForm(id)
+                        renderPollForm(id);
                     }
                 }
                 else {
-                   console && console.warn('No poll found with ID: '+ id);
+                    // eslint-disable-next-line
+                    console && console.warn('No poll found with ID: '+ id);
                 }
             },  function (err, msg) {
-                console && console.warn('Something went wrong : ' + msg)
+                // eslint-disable-next-line
+                console && console.warn('Something went wrong : ' + msg);
             });
     }
 
@@ -90,8 +92,8 @@
 
         bonzo($('.q1')[0]).html(option1[0]);
         bonzo($('.q2')[0]).html(option2[0]);
-        bonzo($('#q1-input')).attr("value", option1[1]);
-        bonzo($('#q2-input')).attr("value", option2[1]);
+        bonzo($('#q1-input')).attr('value', option1[1]);
+        bonzo($('#q2-input')).attr('value', option2[1]);
     }
 
     bean.on($('.submit')[0], 'click',  function(event)
@@ -99,7 +101,7 @@
         var submission = formSerialize($('#form')[0],{ hash: true });
         var answer = submission.option;
         event.preventDefault();
-        submitPoll(id, answer)
+        submitPoll(id, answer);
     });
 
     function renderResultsFromPollJson(id, answer) {
@@ -120,37 +122,36 @@
                         '<div class="pseudo-radio__header q1">You voted for '+ userAnswer + '<br />'
                         +    option1[0] + ' ' + a1Percentage + '%<br />' +
                         '' + option2[0] + ' ' + a2Percentage + '%</div>'
-                    )
+                    );
                 }
                 else {
                 //there will be up to 60 seconds latency before first results are published
                     bonzo($('.form-body')[0]).replaceWith(
                         '<div class="pseudo-radio__header q1">Thank you for voting, come back soon to see the results</div>'
-                    )
+                    );
                 }
-                bonzo($('.submit')[0]).remove()
+                bonzo($('.submit')[0]).remove();
             }
         });
     }
 
     function submitPoll(id, answer) {
         savePollSubmissionInLocalStorage(id, answer);
-        var postData = {"answers": {"question": id, "answer": answer}};
+        var postData = {'answers': {'question': id, 'answer': answer}};
         reqwest({
             url: interactiveApi + '/quiz/?key=poll'
             , contentType: 'application/json'
             , method: 'post'
             , data: JSON.stringify(postData)
             , crossOrigin: true
-            , success: function (resp) {
-                renderResultsFromPollJson(id, answer)
+            , success: function () {
+                renderResultsFromPollJson(id, answer);
             }
-            , error: function (error) {
-                console.log(error)
-            }
-        })
+            // eslint-disable-next-line
+            , error: console.error
+        });
 
     }
 
-    renderPoll(id)
+    renderPoll(id);
 }());
