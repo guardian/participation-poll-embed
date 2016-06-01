@@ -7,6 +7,7 @@
     var queryString = require('query-string');
     var formSerialize = require('form-serialize');
     var iframeMessenger = require('iframe-messenger');
+    var raf = require('raf');
 
     var interactiveApi = 'https://interactive.guardianapis.com';
     var interactiveHost = 'https://interactive.guim.co.uk';
@@ -114,15 +115,32 @@
                     var a1Count = resp[id][option1[1]] ? resp[id][option1[1]] : 0;
                     var a2Count = resp[id][option2[1]] ? resp[id][option2[1]] : 0;
                     var total = a1Count + a2Count;
-                    var a1Percentage = Math.round(a1Count / total * 100);
-                    var a2Percentage = Math.round(a2Count / total * 100);
+                    var percentages = [Math.round(a1Count / total * 100) + '%', Math.round(a2Count / total * 100) + '%'];
                     var userAnswer = option1.indexOf(answer) != -1 ? option1[0] : option2[0];
 
+                    var barHtml = '<span class="bar__outer"><span class="bar__inner js-bar__inner"></span></span>';
+                    var barsHtml = [
+                        '<span class="bar__label">' + option1[0] + '</span>' + barHtml + percentages[0],
+                        '<span class="bar__label">' + option2[0] + '</span>' + barHtml + percentages[1]
+                    ];
+
                     bonzo($('.form-body')[0]).replaceWith(
-                        '<div class="pseudo-radio__header q1">You voted for '+ userAnswer + '<br />'
-                        +    option1[0] + ' ' + a1Percentage + '%<br />' +
-                        '' + option2[0] + ' ' + a2Percentage + '%</div>'
+                        '<div class="bar">' +
+                            '<h3 class="pseudo-radio__header ">You voted for "'+ userAnswer + '"</h3>' +
+                            '<span class="bar__wrap pseudo-radio__note">' + barsHtml[0] + '</span>' +
+                            '<span class="bar__wrap pseudo-radio__note">' + barsHtml[1] + '</span>' +
+                        '</div>'
                     );
+
+                    raf(function(){
+                        var $bars = $('.js-bar__inner');
+
+                        // Animate bars to correct position
+                        for (var i = 0; i < $bars.length; i++) {
+                            $bars[i].style.transform = 'translateX(' + percentages[i] + ')';
+                        }
+                    });
+
                 }
                 else {
                 //there will be up to 60 seconds latency before first results are published

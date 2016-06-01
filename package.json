@@ -18,10 +18,11 @@
     "bean": "^1.0.15",
     "bonzo": "^2.0.0",
     "browserify": "^13.0.1",
+    "form-serialize": "^0.7.1",
+    "iframe-messenger": "guardian/iframe-messenger#master",
     "query-string": "^4.1.0",
     "qwery": "^4.0.0",
-    "reqwest": "^2.0.5",
-    "form-serialize": "^0.7.1",
-    "iframe-messenger": "guardian/iframe-messenger#master"
+    "raf": "^3.2.0",
+    "reqwest": "^2.0.5"
   }
 }

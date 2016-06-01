@@ -36,3 +36,41 @@
 .pseudo-radio-input:active + .pseudo-radio {
     border: 1px solid #005689;
 }
+
+/* Override Fieldset Styles */
+
+.fieldset__heading {
+    padding-bottom: 12px;
+}
+
+/* Simple Bars */
+.bar {
+    padding: 0 12px 10px
+}
+
+.bar__wrap {
+    display: block;
+    margin-top: 5px;
+}
+
+.bar__label {
+    display: block;
+}
+
+.bar__outer {
+    display: inline-block;
+    margin-right: 10px;
+    overflow: hidden;
+    width: 100px;
+}
+
+.bar__inner {
+    height: 15px;
+    background: #005689;
+    width: 100%;
+    display: block;
+    /* Remove the inner from view so we can translate it in */
+    margin-left: -100%;
+    transform: translateX(0);
+    transition: transform 1s;
+}
