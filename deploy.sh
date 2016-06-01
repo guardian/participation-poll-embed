@@ -3,6 +3,7 @@
 npm install
 mkdir -p build/bower_components/pasteup-forms/build
 mkdir -p build/css
+npm run eslint
 cp index.html bundle.js build/
 cp css/style.css build/css/style.css
 cp bower_components/pasteup-forms/build/forms.min.css build/bower_components/pasteup-forms/build/
