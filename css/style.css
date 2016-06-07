@@ -1,0 +1,76 @@
+.form-is-hidden{
+    display: none;
+}
+
+/* Accessible Radio Buttons */
+
+.pseudo-radio-input {
+    display: block;
+    position: absolute;
+    width: 22px;
+    height: 22px;
+    overflow: hidden;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    outline: 0;
+    opacity: 0;
+}
+
+/* Replace focus and check styles */
+.pseudo-radio {
+    /* Avoid jumpiness */
+    border: 1px solid transparent;
+}
+
+.pseudo-radio:before {
+    top: 15px;
+}
+
+.pseudo-radio-input:checked + .pseudo-radio {
+    border-color: transparent;
+}
+
+.pseudo-radio-input:hover + .pseudo-radio,
+.pseudo-radio-input:focus + .pseudo-radio,
+.pseudo-radio-input:active + .pseudo-radio {
+    border: 1px solid #005689;
+}
+
+/* Override Fieldset Styles */
+
+.fieldset__heading {
+    padding-bottom: 12px;
+}
+
+/* Simple Bars */
+.bar {
+    padding: 0 12px 10px
+}
+
+.bar__wrap {
+    display: block;
+    margin-top: 5px;
+}
+
+.bar__label {
+    display: block;
+}
+
+.bar__outer {
+    display: inline-block;
+    margin-right: 10px;
+    overflow: hidden;
+    width: 100px;
+}
+
+.bar__inner {
+    height: 15px;
+    background: #005689;
+    width: 100%;
+    display: block;
+    /* Remove the inner from view so we can translate it in */
+    margin-left: -100%;
+    transform: translateX(0);
+    transition: transform 1s;
+}

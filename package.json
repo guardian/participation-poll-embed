@@ -1,0 +1,28 @@
+{
+  "name": "poll-embed",
+  "version": "1.0.0",
+  "description": "Poll embed",
+  "main": "index.html",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "postinstall": "node_modules/.bin/bower install && node_modules/.bin/browserify main.js -o bundle.js",
+    "eslint": "eslint main.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "bower": "^1.7.9",
+    "watchify": "^3.7.0"
+  },
+  "dependencies": {
+    "bean": "^1.0.15",
+    "bonzo": "^2.0.0",
+    "browserify": "^13.0.1",
+    "form-serialize": "^0.7.1",
+    "iframe-messenger": "guardian/iframe-messenger#master",
+    "query-string": "^4.1.0",
+    "qwery": "^4.0.0",
+    "raf": "^3.2.0",
+    "reqwest": "^2.0.5"
+  }
+}

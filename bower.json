@@ -1,0 +1,21 @@
+{
+  "name": "poll-embed",
+  "description": "Poll embed",
+  "main": "index.html",
+  "authors": [
+    "Gideon Goldberg <gidsgoldberg@gmail.com>"
+  ],
+  "license": "ISC",
+  "homepage": "",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "pasteup-forms": "^7.0.0"
+  }
+}
