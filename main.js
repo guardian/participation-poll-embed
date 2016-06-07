@@ -8,6 +8,7 @@
     var formSerialize = require('form-serialize');
     var iframeMessenger = require('iframe-messenger');
     var raf = require('raf');
+    var useStaticPoll = true;
 
     var interactiveApi = 'https://interactive.guardianapis.com';
     var interactiveHost = 'https://interactive.guim.co.uk';
@@ -59,7 +60,7 @@
 
     function renderPoll() {
         reqwest({
-            url: interactiveHost + '/docsdata/10RGbEQiyWIw_6EvtdVwoK3HQr2W0ipeIlfq1Jb6Dw-g.json'
+            url: useStaticPoll ? 'poll-static.json' : interactiveHost + '/docsdata/10RGbEQiyWIw_6EvtdVwoK3HQr2W0ipeIlfq1Jb6Dw-g.json'
             , type: 'json'
         })
             .then(function (resp) {
