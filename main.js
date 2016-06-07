@@ -100,11 +100,17 @@
 
     bean.on($('#form')[0], 'submit',  function(event)
     {
-            var submission = formSerialize($('#form')[0], {hash: true});
-            var answer = submission.option;
-            event.preventDefault();
+        var submission = formSerialize($('#form')[0], {hash: true});
+        var answer = submission.option;
+        event.preventDefault();
+        if(answer) {
             submitPoll(id, answer);
-        });
+        }
+        else {
+            // eslint-disable-next-line
+            console && console.warn('no answer submitted');
+        }
+    });
 
     function renderResultsFromPollJson(id, answer) {
         reqwest({
@@ -154,8 +160,6 @@
     }
 
     function submitPoll(id, answer) {
-
-
         savePollSubmissionInLocalStorage(id, answer);
         var postData = {'answers': {'question': id, 'answer': answer}};
         reqwest({
