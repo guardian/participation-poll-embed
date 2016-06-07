@@ -98,13 +98,13 @@
         bonzo($('#q2-input')).attr('value', option2[1]);
     }
 
-    bean.on($('.submit')[0], 'click',  function(event)
+    bean.on($('#form')[0], 'submit',  function(event)
     {
-        var submission = formSerialize($('#form')[0],{ hash: true });
-        var answer = submission.option;
-        event.preventDefault();
-        submitPoll(id, answer);
-    });
+            var submission = formSerialize($('#form')[0], {hash: true});
+            var answer = submission.option;
+            event.preventDefault();
+            submitPoll(id, answer);
+        });
 
     function renderResultsFromPollJson(id, answer) {
         reqwest({
@@ -154,6 +154,8 @@
     }
 
     function submitPoll(id, answer) {
+
+
         savePollSubmissionInLocalStorage(id, answer);
         var postData = {'answers': {'question': id, 'answer': answer}};
         reqwest({
