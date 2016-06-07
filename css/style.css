@@ -45,7 +45,7 @@
 
 /* Simple Bars */
 .bar {
-    padding: 0 12px 10px
+    padding: 0 12px 10px;
 }
 
 .bar__wrap {
@@ -62,6 +62,7 @@
     margin-right: 10px;
     overflow: hidden;
     width: 100px;
+    background: rgb(166, 166, 166);
 }
 
 .bar__inner {
