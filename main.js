@@ -25,6 +25,19 @@
         return string.replace(/[\s+|\W]/g, '').toLowerCase();
     }
 
+    function hasLocalStorage() {
+        try {
+            var storage = window['localStorage'],
+                x = '__storage_test__';
+            storage.setItem(x, x);
+            storage.removeItem(x);
+            return true;
+        }
+        catch(e) {
+            return false;
+        }
+    }
+
     function getIdFromQueryString(){
         var parsedQueryString = queryString.parse(location.search);
         return parsedQueryString.id != undefined ? parsedQueryString.id : 'test';
@@ -48,13 +61,14 @@
     }
 
     function savePollSubmissionInLocalStorage(id, answer){
-
-        if(!localStorage.getItem(localStorageKey)) {
-            localStorage.setItem(localStorageKey, JSON.stringify([{id: id, answer: answer}]));
-        } else {
-            var polls = JSON.parse(localStorage.getItem(localStorageKey));
-            polls.push({id: id, answer: answer});
-            localStorage.setItem(localStorageKey, JSON.stringify(polls));
+        if(hasLocalStorage) {
+            if (!localStorage.getItem(localStorageKey)) {
+                localStorage.setItem(localStorageKey, JSON.stringify([{id: id, answer: answer}]));
+            } else {
+                var polls = JSON.parse(localStorage.getItem(localStorageKey));
+                polls.push({id: id, answer: answer});
+                localStorage.setItem(localStorageKey, JSON.stringify(polls));
+            }
         }
     }
 
