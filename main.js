@@ -98,12 +98,18 @@
         bonzo($('#q2-input')).attr('value', option2[1]);
     }
 
-    bean.on($('.submit')[0], 'click',  function(event)
+    bean.on($('#form')[0], 'submit',  function(event)
     {
-        var submission = formSerialize($('#form')[0],{ hash: true });
+        var submission = formSerialize($('#form')[0], {hash: true});
         var answer = submission.option;
         event.preventDefault();
-        submitPoll(id, answer);
+        if(answer) {
+            submitPoll(id, answer);
+        }
+        else {
+            // eslint-disable-next-line
+            console && console.warn('no answer submitted');
+        }
     });
 
     function renderResultsFromPollJson(id, answer) {
