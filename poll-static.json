@@ -1,0 +1,39 @@
+{
+  "sheets": {
+    "test": [
+      {
+        "title": "What colour is the sky?",
+        "a1": "red",
+        "a2": "blue"
+      }
+    ],
+    "myawesomepoll": [
+      {
+        "title": "Is my poll awesome?\n",
+        "a1": "yes",
+        "a2": "no"
+      }
+    ],
+    "test4": [
+      {
+        "title": "Does the tutorial work?",
+        "a1": "Sure thing",
+        "a2": "No way"
+      }
+    ],
+    "test2": [
+      {
+        "title": "Why does it always rain on me?",
+        "a1": "I lied when I was 17",
+        "a2": "local precipitation"
+      }
+    ],
+    "test3": [
+      {
+        "title": "Is there a publishing latency?",
+        "a1": "Yes",
+        "a2": "No"
+      }
+    ]
+  }
+}
