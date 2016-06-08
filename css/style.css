@@ -17,6 +17,11 @@
     opacity: 0;
 }
 
+/* Centre button text */
+.button--large {
+    line-height: normal;
+}
+
 /* Replace focus and check styles */
 .pseudo-radio {
     /* Avoid jumpiness */
