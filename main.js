@@ -8,7 +8,7 @@
     var formSerialize = require('form-serialize');
     var iframeMessenger = require('iframe-messenger');
     var raf = require('raf');
-    var useStaticPoll = true;
+    var useStaticPoll = false;
 
     var interactiveApi = 'https://interactive.guardianapis.com';
     var interactiveHost = 'https://interactive.guim.co.uk';
