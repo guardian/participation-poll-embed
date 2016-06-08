@@ -51,7 +51,7 @@
             return data.filter(byId)[0];
         }
 
-        if (localStorage.getItem(localStorageKey) != null) {
+        if (hasLocalStorage() && localStorage.getItem(localStorageKey) != null) {
             var polls = JSON.parse(localStorage.getItem(localStorageKey));
             return getPollById(polls, id);
         }
@@ -61,7 +61,7 @@
     }
 
     function savePollSubmissionInLocalStorage(id, answer){
-        if(hasLocalStorage) {
+        if(hasLocalStorage()) {
             if (!localStorage.getItem(localStorageKey)) {
                 localStorage.setItem(localStorageKey, JSON.stringify([{id: id, answer: answer}]));
             } else {
