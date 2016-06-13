@@ -22,6 +22,12 @@
     line-height: normal;
 }
 
+/* Make unit border top rather than bottom */
+.fieldset--poll {
+    border-bottom: none;
+    border-top: 1px solid #005689;
+}
+
 /* Replace focus and check styles */
 .pseudo-radio {
     /* Avoid jumpiness */
