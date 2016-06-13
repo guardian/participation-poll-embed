@@ -136,6 +136,7 @@
                     var a1Count = resp[id][option1[1]] ? resp[id][option1[1]] : 0;
                     var a2Count = resp[id][option2[1]] ? resp[id][option2[1]] : 0;
                     var total = a1Count + a2Count;
+                    bonzo($('.total')).html(total + " total votes");
                     var percentages = [Math.round(a1Count / total * 100) + '%', Math.round(a2Count / total * 100) + '%'];
                     var userAnswer = option1.indexOf(answer) != -1 ? option1[0] : option2[0];
 
@@ -150,7 +151,6 @@
                             '<h3 class="pseudo-radio__header ">You voted for "'+ userAnswer + '"</h3>' +
                             '<span class="bar__wrap pseudo-radio__note">' + barsHtml[0] + '</span>' +
                             '<span class="bar__wrap pseudo-radio__note">' + barsHtml[1] + '</span>' +
-                            '<span class="form-note">' + total + ' votes' + '</span>' +
                         '</div>'
                     );
 
