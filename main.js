@@ -150,6 +150,7 @@
                             '<h3 class="pseudo-radio__header ">You voted for "'+ userAnswer + '"</h3>' +
                             '<span class="bar__wrap pseudo-radio__note">' + barsHtml[0] + '</span>' +
                             '<span class="bar__wrap pseudo-radio__note">' + barsHtml[1] + '</span>' +
+                            '<span class="form-note">' + total + ' votes' + '</span>' +
                         '</div>'
                     );
 
