@@ -22,6 +22,17 @@
     line-height: normal;
 }
 
+/* Make unit border top rather than bottom */
+.fieldset--poll {
+    border-bottom: none;
+    border-top: 1px solid #005689;
+}
+
+.bar__label--percentage {
+    display: inline-block;
+    vertical-align: text-bottom;
+}
+
 /* Replace focus and check styles */
 .pseudo-radio {
     /* Avoid jumpiness */
@@ -68,6 +79,7 @@
     overflow: hidden;
     width: 100px;
     background: rgb(166, 166, 166);
+    vertical-align: baseline;
 }
 
 .bar__inner {
