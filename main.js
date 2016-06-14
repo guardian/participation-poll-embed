@@ -136,7 +136,7 @@
                     var a1Count = resp[id][option1[1]] ? resp[id][option1[1]] : 0;
                     var a2Count = resp[id][option2[1]] ? resp[id][option2[1]] : 0;
                     var total = a1Count + a2Count;
-                    bonzo($('.total')).html(total + " votes in total");
+                    bonzo($('.total')).html(total + ' votes in total');
                     var percentages = [Math.round(a1Count / total * 100) + '%', Math.round(a2Count / total * 100) + '%'];
                     var userAnswer = option1.indexOf(answer) != -1 ? option1[0] : option2[0];
 
