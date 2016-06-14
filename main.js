@@ -109,7 +109,9 @@
         bonzo($('.q1')[0]).html(option1[0]);
         bonzo($('.q2')[0]).html(option2[0]);
         bonzo($('#q1-input')).attr('value', option1[1]);
+        bonzo($('#q1-input')).attr('data-link-name', 'poll-id : '+ id + ' : poll-option : ' + option1[1]);
         bonzo($('#q2-input')).attr('value', option2[1]);
+        bonzo($('#q2-input')).attr('data-link-name', 'poll-id : ' + id + ' : poll-option : ' + option2[1]);
     }
 
     bean.on($('#form')[0], 'submit',  function(event)
