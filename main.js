@@ -136,20 +136,20 @@
                     var a1Count = resp[id][option1[1]] ? resp[id][option1[1]] : 0;
                     var a2Count = resp[id][option2[1]] ? resp[id][option2[1]] : 0;
                     var total = a1Count + a2Count;
-                    bonzo($('.total')).html(total + " total votes");
+                    bonzo($('.total')).html(total + " votes in total");
                     var percentages = [Math.round(a1Count / total * 100) + '%', Math.round(a2Count / total * 100) + '%'];
                     var userAnswer = option1.indexOf(answer) != -1 ? option1[0] : option2[0];
 
                     var barHtml = '<span class="bar__outer"><span class="bar__inner js-bar__inner"></span></span>';
                     var barsHtml = [
-                        '<span class="bar__label">' + option1[0] + '</span>' + barHtml + percentages[0],
-                        '<span class="bar__label">' + option2[0] + '</span>' + barHtml + percentages[1]
+                        '<span class="bar__label">' + option1[0] + '</span>' + barHtml + '<span class="bar__label--percentage">'+ percentages[0] + '</span>',
+                        '<span class="bar__label">' + option2[0] + '</span>' + barHtml + '<span class="bar__label--percentage">'+ percentages[1] + '</span>'
                     ];
 
                     bonzo($('.form-body')[0]).replaceWith(
                         '<div class="bar">' +
                             '<h3 class="pseudo-radio__header ">You voted for "'+ userAnswer + '"</h3>' +
-                            '<span class="bar__wrap pseudo-radio__note">' + barsHtml[0] + '</span>' +
+                            '<span class="bar__wrap pseudo-radio__note">' + barsHtml[0] + '</span> ' +
                             '<span class="bar__wrap pseudo-radio__note">' + barsHtml[1] + '</span>' +
                         '</div>'
                     );
