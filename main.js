@@ -15,13 +15,14 @@
     var localStorageKey = 'gu.polls.submitted';
     var id = getIdFromQueryString();
 
-    var option1;
-    var option2;
-    var title;
+    var answersObj = {};
+    var metaObj = {};
+
 
     iframeMessenger.enableAutoResize();
 
-    function compressString(string){
+
+    function compressString(string) {
         return string.replace(/[\s+|\W]/g, '').toLowerCase();
     }
 
@@ -33,21 +34,22 @@
             storage.removeItem(x);
             return true;
         }
-        catch(e) {
+        catch (e) {
             return false;
         }
     }
 
-    function getIdFromQueryString(){
+    function getIdFromQueryString() {
         var parsedQueryString = queryString.parse(location.search);
         return parsedQueryString.id != undefined ? parsedQueryString.id : 'test';
     }
 
     function getPreviousPollSubmission() {
-        function getPollById(data, id){
+        function getPollById(data, id) {
             function byId(value) {
                 return value.id == id;
             }
+
             return data.filter(byId)[0];
         }
 
@@ -60,8 +62,8 @@
         }
     }
 
-    function savePollSubmissionInLocalStorage(id, answer){
-        if(hasLocalStorage()) {
+    function savePollSubmissionInLocalStorage(id, answer) {
+        if (hasLocalStorage()) {
             if (!localStorage.getItem(localStorageKey)) {
                 localStorage.setItem(localStorageKey, JSON.stringify([{id: id, answer: answer}]));
             } else {
@@ -79,12 +81,21 @@
         })
             .then(function (resp) {
                 if (resp.sheets && resp.sheets[id]) {
-                    var option1FromJson = resp.sheets[id][0].a1;
-                    var option2FromJson = resp.sheets[id][0].a2;
-                    option1 = [option1FromJson, compressString(option1FromJson)];
-                    option2 = [option2FromJson, compressString(option2FromJson)];
-                    title = resp.sheets[id][0].title;
-                    bonzo($('.title')[0]).html(title);
+                    var options = resp.sheets[id][0];
+
+                    for (var key in options) {
+                        if (options.hasOwnProperty(key)) {
+                            if (/^a\d+/.test(key)) {
+                                var compressed = (compressString(options[key]));
+                                answersObj[compressed] = options[key];
+                            }
+                            else if (key == 'title') {
+                                metaObj['title'] = options[key];
+                            }
+                        }
+                    }
+
+                    bonzo($('.title')[0]).html(metaObj['title']);
                     bonzo($('#form')).removeClass('form-is-hidden');
                     var previousSubmission = getPreviousPollSubmission();
                     if (previousSubmission) {
@@ -96,30 +107,31 @@
                 }
                 else {
                     // eslint-disable-next-line
-                    console && console.warn('No poll found with ID: '+ id);
+                    console && console.warn('No poll found with ID: ' + id);
                 }
-            },  function (err, msg) {
+            }, function (err, msg) {
                 // eslint-disable-next-line
                 console && console.warn('Something went wrong : ' + msg);
             });
     }
 
     function renderPollForm() {
+        var pollOptionHtml = '';
 
-        bonzo($('.q1')[0]).html(option1[0]);
-        bonzo($('.q2')[0]).html(option2[0]);
-        bonzo($('#q1-input')).attr('value', option1[1]);
-        bonzo($('#q1-input')).attr('data-link-name', 'poll-id : '+ id + ' : poll-option : ' + option1[1]);
-        bonzo($('#q2-input')).attr('value', option2[1]);
-        bonzo($('#q2-input')).attr('data-link-name', 'poll-id : ' + id + ' : poll-option : ' + option2[1]);
+        for (var key in answersObj) {
+            if (answersObj.hasOwnProperty(key)) {
+                pollOptionHtml += '<label class="label" for="' + key + '"> <input type="radio" class="pseudo-radio-input" name="option" id="' + key + '" value="' + key + '" data-link-name="poll-id : ' + id + ' : poll-option : ' + answersObj[key] + '" required="required"> <div class="pseudo-radio"> <div class="q1"></div>' + answersObj[key] + '</div> </label>';
+            }
+        }
+
+        bonzo($('.form-field')[0]).html(pollOptionHtml);
     }
 
-    bean.on($('#form')[0], 'submit',  function(event)
-    {
+    bean.on($('#form')[0], 'submit', function (event) {
         var submission = formSerialize($('#form')[0], {hash: true});
         var answer = submission.option;
         event.preventDefault();
-        if(answer) {
+        if (answer) {
             submitPoll(id, answer);
         }
         else {
@@ -131,43 +143,59 @@
     function renderResultsFromPollJson(id, answer) {
         reqwest({
             url: interactiveHost + '/participation/poll-results.json'
-            ,method: 'get'
-            ,type: 'json'
-            ,success: function (resp) {
-                if(resp[id] != null) {
-                    var a1Count = resp[id][option1[1]] ? resp[id][option1[1]] : 0;
-                    var a2Count = resp[id][option2[1]] ? resp[id][option2[1]] : 0;
-                    var total = a1Count + a2Count;
-                    bonzo($('.total')).html(total + ' votes in total');
-                    var percentages = [Math.round(a1Count / total * 100) + '%', Math.round(a2Count / total * 100) + '%'];
-                    var userAnswer = option1.indexOf(answer) != -1 ? option1[0] : option2[0];
+            , method: 'get'
+            , type: 'json'
+            , success: function (resp) {
+                if (resp[id] != null) {
+                    var resultsForId = resp[id];
+                    var total = 0;
 
+
+                    for (var result in resultsForId) {
+                        if (resultsForId.hasOwnProperty(result)) {
+                            total += resultsForId[result];
+                        }
+                    }
+
+                    bonzo($('.total')).html(total + ' votes in total');
+
+                    var userAnswer = answersObj[answer];
                     var barHtml = '<span class="bar__outer"><span class="bar__inner js-bar__inner"></span></span>';
-                    var barsHtml = [
-                        '<span class="bar__label">' + option1[0] + '</span>' + barHtml + '<span class="bar__label--percentage">'+ percentages[0] + '</span>',
-                        '<span class="bar__label">' + option2[0] + '</span>' + barHtml + '<span class="bar__label--percentage">'+ percentages[1] + '</span>'
-                    ];
+
+                    var barsHtml = '';
+                    var percentages = [];
+                    for (var key in answersObj) {
+                        if (answersObj.hasOwnProperty(key)) {
+                            if (resultsForId[key]) {
+                                var percentage = Math.round(resultsForId[key] / total * 100);
+                                percentages.push(percentage);
+                            }
+                            else {
+                                //if there are no results then default to 0
+                                percentages.push(0);
+                                percentage = 0;
+                            }
+                            barsHtml += '<span class="bar__wrap pseudo-radio__note"><span class="bar__label">' + answersObj[key] + '</span>' + barHtml + '<span class="bar__label--percentage">' + percentage + '%</span></span>';
+                        }
+                    }
 
                     bonzo($('.form-body')[0]).replaceWith(
                         '<div class="bar">' +
-                            '<h3 class="pseudo-radio__header ">You voted for "'+ userAnswer + '"</h3>' +
-                            '<span class="bar__wrap pseudo-radio__note">' + barsHtml[0] + '</span> ' +
-                            '<span class="bar__wrap pseudo-radio__note">' + barsHtml[1] + '</span>' +
+                        '<h3 class="pseudo-radio__header ">You voted for "' + userAnswer + '"</h3>' +
+                        barsHtml +
                         '</div>'
                     );
-
-                    raf(function(){
+                    raf(function () {
                         var $bars = $('.js-bar__inner');
-
                         // Animate bars to correct position
                         for (var i = 0; i < $bars.length; i++) {
-                            $bars[i].style.transform = 'translateX(' + percentages[i] + ')';
+                            $bars[i].style.transform = 'translateX(' + percentages[i] + '%)';
                         }
                     });
 
                 }
                 else {
-                //there will be up to 60 seconds latency before first results are published
+                    //there will be up to 60 seconds latency before first results are published
                     bonzo($('.form-body')[0]).replaceWith(
                         '<div class="pseudo-radio__header q1">Thank you for voting, come back soon to see the results</div>'
                     );
