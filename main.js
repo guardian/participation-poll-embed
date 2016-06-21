@@ -187,11 +187,19 @@
             , crossOrigin: true
             , success: function () {
                 renderResultsFromPollJson(id, answer);
+                postMessageToParent();
             }
             // eslint-disable-next-line
             , error: console.error
         });
+    }
 
+    function postMessageToParent() {
+        var messageObj = {
+                type: 'pollPost'
+            };
+
+        window.parent.postMessage(JSON.stringify(messageObj), '*');
     }
 
     renderPoll(id);
