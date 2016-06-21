@@ -196,10 +196,10 @@
 
     function postMessageToParent() {
         var messageObj = {
-                type: "pollPost"
+                type: 'pollPost'
             };
 
-        window.parent.postMessage(JSON.stringify(messageObj),"*");
+        window.parent.postMessage(JSON.stringify(messageObj), '*');
     }
 
     renderPoll(id);
