@@ -166,8 +166,9 @@
                     var percentages = [];
                     for (var key in answersObj) {
                         if (answersObj.hasOwnProperty(key)) {
-                            if (resultsForId[key]) {
-                                var percentage = Math.round(resultsForId[key] / total * 100);
+                            var count = resultsForId[key];
+                            if (count) {
+                                var percentage = Math.round(count / total * 100);
                                 percentages.push(percentage);
                             }
                             else {
