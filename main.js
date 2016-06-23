@@ -56,8 +56,7 @@
         if (hasLocalStorage() && localStorage.getItem(localStorageKey) != null) {
             var polls = JSON.parse(localStorage.getItem(localStorageKey));
             return getPollById(polls, id);
-        }
-        else {
+        } else {
             return null;
         }
     }
@@ -88,8 +87,7 @@
                             if (/^a\d+/.test(key)) {
                                 var compressed = (compressString(options[key]));
                                 answersObj[compressed] = options[key];
-                            }
-                            else if (key == 'title') {
+                            } else if (key == 'title') {
                                 metaObj['title'] = options[key];
                             }
                         }
@@ -100,12 +98,10 @@
                     var previousSubmission = getPreviousPollSubmission();
                     if (previousSubmission) {
                         renderResultsFromPollJson(previousSubmission.id, previousSubmission.answer);
-                    }
-                    else {
+                    } else {
                         renderPollForm(id);
                     }
-                }
-                else {
+                } else {
                     // eslint-disable-next-line
                     console && console.warn('No poll found with ID: ' + id);
                 }
@@ -133,8 +129,7 @@
         event.preventDefault();
         if (answer) {
             submitPoll(id, answer);
-        }
-        else {
+        } else {
             // eslint-disable-next-line
             console && console.warn('no answer submitted');
         }
@@ -170,8 +165,7 @@
                             if (count) {
                                 var percentage = Math.round(count / total * 100);
                                 percentages.push(percentage);
-                            }
-                            else {
+                            } else {
                                 //if there are no results then default to 0
                                 percentages.push(0);
                                 percentage = 0;
@@ -194,8 +188,7 @@
                         }
                     });
 
-                }
-                else {
+                } else {
                     //there will be up to 60 seconds latency before first results are published
                     bonzo($('.form-body')[0]).replaceWith(
                         '<div class="pseudo-radio__header q1">Thank you for voting, come back soon to see the results</div>'
