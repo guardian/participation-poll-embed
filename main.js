@@ -116,7 +116,7 @@
 
         for (var key in answersObj) {
             if (answersObj.hasOwnProperty(key)) {
-                pollOptionHtml += '<label class="label" for="' + key + '"> <input type="radio" class="pseudo-radio-input" name="option" id="' + key + '" value="' + key + '" data-link-name="poll-id : ' + id + ' : poll-option : ' + answersObj[key] + '" required="required"> <div class="pseudo-radio"> <div class="q1"></div>' + answersObj[key] + '</div> </label>';
+                pollOptionHtml += '<label class="label" for="' + key + '"> <input type="radio" class="pseudo-radio-input" name="option" id="' + key + '" value="' + key + '" data-link-name="poll-id : ' + id + ' : poll-option : ' + key + '" required="required"> <div class="pseudo-radio"> <div class="q1"></div>' + answersObj[key] + '</div> </label>';
             }
         }
 
