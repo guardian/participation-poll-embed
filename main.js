@@ -89,6 +89,8 @@
                                 answersObj[compressed] = options[key];
                             } else if (key == 'title') {
                                 metaObj['title'] = options[key];
+                            } else if (key == 'isClosed') {
+                                metaObj['isClosed'] = options[key].toLowerCase();
                             }
                         }
                     }
@@ -96,7 +98,7 @@
                     bonzo($('.title')[0]).html(metaObj['title']);
                     bonzo($('#form')).removeClass('form-is-hidden');
                     var previousSubmission = getPreviousPollSubmission();
-                    if (previousSubmission) {
+                    if (previousSubmission || metaObj['isClosed'] == 'true') {
                         renderResultsFromPollJson(previousSubmission.id, previousSubmission.answer);
                     } else {
                         renderPollForm(id);
