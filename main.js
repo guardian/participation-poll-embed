@@ -98,11 +98,13 @@
                     bonzo($('.title')[0]).html(metaObj['title']);
                     bonzo($('#form')).removeClass('form-is-hidden');
                     var previousSubmission = getPreviousPollSubmission();
-                    if (previousSubmission || metaObj['isClosed'] == 'true') {
+                    if (previousSubmission && metaObj['isClosed'] == 'true') {
                         renderResultsFromPollJson(previousSubmission.id, previousSubmission.answer);
+                    } else if (metaObj['isClosed'] == 'true') {
+                        renderResultsFromPollJson(id, null);
                     } else {
                         renderPollForm(id);
-                    }
+                        }
                 } else {
                     // eslint-disable-next-line
                     console && console.warn('No poll found with ID: ' + id);
@@ -156,7 +158,8 @@
 
                     bonzo($('.total')).html(total + ' votes in total');
 
-                    var userAnswer = answersObj[answer];
+                    var userAnswerHtml = answer ? '<h3 class="pseudo-radio__header ">You voted for "' + answersObj[answer] + '"</h3>' : '';
+
                     var barHtml = '<span class="bar__outer"><span class="bar__inner js-bar__inner"></span></span>';
 
                     var barsHtml = '';
@@ -178,7 +181,7 @@
 
                     bonzo($('.form-body')[0]).replaceWith(
                         '<div class="bar">' +
-                        '<h3 class="pseudo-radio__header ">You voted for "' + userAnswer + '"</h3>' +
+                        userAnswerHtml +
                         barsHtml +
                         '</div>'
                     );
