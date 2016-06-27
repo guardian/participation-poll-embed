@@ -98,7 +98,7 @@
                     bonzo($('.title')[0]).html(metaObj['title']);
                     bonzo($('#form')).removeClass('form-is-hidden');
                     var previousSubmission = getPreviousPollSubmission();
-                    if (previousSubmission && metaObj['isClosed'] == 'true') {
+                    if (previousSubmission) {
                         renderResultsFromPollJson(previousSubmission.id, previousSubmission.answer);
                     } else if (metaObj['isClosed'] == 'true') {
                         renderResultsFromPollJson(id, null);
