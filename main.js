@@ -104,7 +104,7 @@
                         renderResultsFromPollJson(id, null);
                     } else {
                         renderPollForm(id);
-                        }
+                    }
                 } else {
                     // eslint-disable-next-line
                     console && console.warn('No poll found with ID: ' + id);
