@@ -8,6 +8,7 @@
     var formSerialize = require('form-serialize');
     var iframeMessenger = require('iframe-messenger');
     var raf = require('raf');
+    var moment = require('moment');
     var useStaticPoll = false;
 
     var interactiveApi = 'https://interactive.guardianapis.com';
@@ -20,7 +21,6 @@
 
 
     iframeMessenger.enableAutoResize();
-
 
     function compressString(string) {
         return string.replace(/[\s+|\W]/g, '').toLowerCase();
@@ -87,10 +87,18 @@
                             if (/^a\d+/.test(key)) {
                                 var compressed = (compressString(options[key]));
                                 answersObj[compressed] = options[key];
-                            } else if (key == 'title') {
+                            } else if (key === 'title') {
                                 metaObj['title'] = options[key];
-                            } else if (key == 'isClosed') {
+                            } else if (key === 'isClosed') {
                                 metaObj['isClosed'] = options[key].toLowerCase();
+                            } else if (key === 'closedAfter') {
+                                var date = options[key];
+                                if (moment(date, moment.ISO_8601).isValid()) {
+                                    metaObj['closedAfter'] = date;
+                                } else {
+                                    // eslint-disable-next-line
+                                    console && console.warn('closedAfter date is not valid ISO8601');
+                                }
                             }
                         }
                     }
@@ -100,7 +108,7 @@
                     var previousSubmission = getPreviousPollSubmission();
                     if (previousSubmission) {
                         renderResultsFromPollJson(previousSubmission.id, previousSubmission.answer);
-                    } else if (metaObj['isClosed'] == 'true') {
+                    } else if (metaObj['isClosed'] === 'true' || (metaObj['closedAfter']) && moment(metaObj['closedAfter']).isBefore()) {
                         renderResultsFromPollJson(id, null);
                     } else {
                         renderPollForm(id);
