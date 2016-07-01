@@ -4,7 +4,9 @@
       {
         "title": "What colour is the sky?",
         "a1": "red",
-        "a2": "blue"
+        "a2": "blue",
+        "closedAfter": "2017-07-02T10:19:05+01:00",
+        "isClosed": "false"
       }
     ],
     "myawesomepoll": [

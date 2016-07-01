@@ -20,6 +20,7 @@
     "browserify": "^13.0.1",
     "form-serialize": "^0.7.1",
     "iframe-messenger": "guardian/iframe-messenger#master",
+    "moment": "^2.13.0",
     "query-string": "^4.1.0",
     "qwery": "^4.0.0",
     "raf": "^3.2.0",
