@@ -87,11 +87,11 @@
                             if (/^a\d+/.test(key)) {
                                 var compressed = (compressString(options[key]));
                                 answersObj[compressed] = options[key];
-                            } else if (key == 'title') {
+                            } else if (key === 'title') {
                                 metaObj['title'] = options[key];
-                            } else if (key == 'isClosed') {
+                            } else if (key === 'isClosed') {
                                 metaObj['isClosed'] = options[key].toLowerCase();
-                            } else if (key == 'closedAfter') {
+                            } else if (key === 'closedAfter') {
                                 var date = options[key];
                                 if (moment(date, moment.ISO_8601).isValid()) {
                                     metaObj['closedAfter'] = date;
@@ -108,7 +108,7 @@
                     var previousSubmission = getPreviousPollSubmission();
                     if (previousSubmission) {
                         renderResultsFromPollJson(previousSubmission.id, previousSubmission.answer);
-                    } else if (metaObj['isClosed'] == 'true' || (metaObj['closedAfter']) && moment(metaObj['closedAfter']).isBefore()) {
+                    } else if (metaObj['isClosed'] === 'true' || (metaObj['closedAfter']) && moment(metaObj['closedAfter']).isBefore()) {
                         renderResultsFromPollJson(id, null);
                     } else {
                         renderPollForm(id);
