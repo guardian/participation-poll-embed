@@ -10,5 +10,6 @@ jobs:
       DEBUG: true
       ORG: guardian-test
       SKIP_NODE: true
+      NODE_PACKAGE_JSON_FILES_MISSING_LOCK: package.json aggreagate-polls/package.json
     secrets:
        SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
